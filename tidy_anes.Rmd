@@ -1,0 +1,118 @@
+---
+title: "ANES Clean"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+```
+
+# Important variables
+
+* weight variables
+** VCF0009x/VCF0009y/VCF0009z
+
+* demographics
+** VCF0101 - age
+** VCF0102 - age group
+** VCF0104 - gender
+** VCF0110 - R education 4-cat
+** VCF0114 - R family income group
+** VCF0140 - education 6-cat
+** VCF0140a - R education 7-cat
+** VCF0105a - Race/ethnicity summary 7-cat
+** VCF0105b - Race/ethnicity summary 4-cat
+** VCF0106 - Race summary 3-cat
+** VCF0301 - Party Identification of Respondent
+** VCF0302 - Initial Party ID response
+** VCF0305 - strength of partisanship
+
+
+* analysis
+** VCF0201 - FT Democrats
+** VCF0202 - FT Republicans
+** VCF0203 - FT Protestants
+** VCF0204 - FT Catholics
+** VCF0205 - FT Jewish people
+** VCF0206 - FT Black people
+** VCF0207 - FT White people
+** VCF0208 - FT Southerners
+** VCF0211 - FT Liberals
+** VCF0212 - FT Conservatives
+** VCF0217 - FT Chicanos/Hispanics
+** VCF0219 - FT Middle class people
+** VCF0220 - FT People on welfare
+** VCF0223 - FT Poor people
+** VCF9006 - FT Women
+** VCF0227 - FT Asian Americans
+** VCF0233 - FT Illegal Aliens
+** VCF0232 - FT Gays and lesbians
+
+** VCF0839 - Gov Services/Spending scale
+** VCF0843 - Gov Defense Spending
+** VCF0886 - Fed Spend poor people
+** VCF0887 - Fed Spend child care
+** VCF0888 - Fed spend dealing with crime
+** VCF0889 - Fed spend fight AIDS
+** VCF0890 - Fed spend public school
+** VCF0891 - Fed spend aid for college students
+** VCF0892 - Fed spend foreign aid
+** VCF0893 - Fed spend the homeless
+** VCF0894 - Fed spend welfare
+** VCF9048 - Fed spend space/science/technology
+** VCF9047 - Fed spend improve/protect the environment
+** VCF9046 - Fed spend food stamps
+** VCF0879 - Increase/decrease number of immigrants to the US 6-cat
+** VCF0879a - Increase/decrease number of immigrants to the US 4-cat
+
+
+
+
+
+```{r, echo=FALSE}
+var_anes <- read_anes_cdf %>%
+  select(year = VCF0004, id = VCF0006a,
+    # weight variables
+    weight1 = VCF0009x, weight2 = VCF0009y, weight3 = VCF0009z,
+    # demographic variables
+    age = VCF0101, age_group = VCF0102, gender = VCF0104, educ4 = VCF0110, fam_income = VCF0114,
+    educ6 = VCF0140, educ7 = VCF0140a, race7 = VCF0105a, race4 = VCF0105b, race3 = VCF0106, 
+    partyid = VCF0301, party = VCF0302, id_strength = VCF0305, 
+    # group thermometer variables
+    ft_dem =  VCF0201, ft_rep = VCF0202, ft_protestants = VCF0203, ft_catholic = VCF0204, 
+    ft_jewish = VCF0205, ft_black = VCF0206, ft_white = VCF0207, ft_south = VCF0208, 
+    ft_lib = VCF0211, ft_conserv = VCF0212, ft_hispanic = VCF0217, ft_middle = VCF0219, 
+    ft_welfare = VCF0220, ft_poor = VCF0223, ft_women = VCF9006, ft_asian = VCF0227, 
+    ft_undoc = VCF0233, ft_gay = VCF0232, 
+    # opinion variables
+    serv_spend = VCF0839, spend_def = VCF0843, spend_poor = VCF0886, spend_child = VCF0887, 
+    spend_crime = VCF0888, spend_aids = VCF0889, spend_school = VCF0890, spend_college = VCF0891, 
+    spend_foreign = VCF0892, spend_homeless = VCF0893, spend_welfare = VCF0894, spend_sci = VCF9048, 
+    spend_environ = VCF9047, spend_stamps = VCF9046, immigrants6 = VCF0879, immigrants4 = VCF0879a)
+
+# make year variable a factor
+
+unique(var_anes$year)
+```
+
+Select years for study
+
+```{r, echo=FALSE}
+# new data set to filter years
+anes_recent <- var_anes
+
+# make a numeric variable of years to study
+years <- c(2004, 2008, 2012, 2016)
+
+# filter year variable for the numbers contained in the years vector
+anes_recent <- anes_recent[anes_recent$year == years, ]
+```
+ 
+
+
+```{r, echo=FALSE}
+# copy this for code chunk
+```
+
