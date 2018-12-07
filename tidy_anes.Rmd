@@ -91,10 +91,6 @@ var_anes <- read_anes_cdf %>%
     spend_crime = VCF0888, spend_aids = VCF0889, spend_school = VCF0890, spend_college = VCF0891, 
     spend_foreign = VCF0892, spend_homeless = VCF0893, spend_welfare = VCF0894, spend_sci = VCF9048, 
     spend_environ = VCF9047, spend_stamps = VCF9046, immigrants6 = VCF0879, immigrants4 = VCF0879a)
-
-# make year variable a factor
-
-unique(var_anes$year)
 ```
 
 Select years for study
@@ -108,6 +104,9 @@ years <- c(2004, 2008, 2012, 2016)
 
 # filter year variable for the numbers contained in the years vector
 anes_recent <- anes_recent[anes_recent$year == years, ]
+
+# make year variable into a factor
+anes_recent$year <- as.factor(anes_recent$year)
 ```
  
 
